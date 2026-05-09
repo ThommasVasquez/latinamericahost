@@ -5,4 +5,6 @@ export const auth = createNeonAuth({
   cookies: {
     secret: process.env.NEON_AUTH_COOKIE_SECRET || "grIrD1fhwQ1Rq+XE8w8aogO/z7EmZuvO3wjB8lGrAdo=",
   },
+  // Requerido para despliegues detrás de proxies como Cloudflare Pages
+  trustHost: true,
 });
