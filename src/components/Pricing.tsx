@@ -1,6 +1,24 @@
-import { Check, ArrowRight } from "lucide-react";
+"use client";
+import { useState } from "react";
+import { Check, ArrowRight, Loader2, PartyPopper } from "lucide-react";
 
 export default function Pricing() {
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const [successPlan, setSuccessPlan] = useState<string | null>(null);
+
+  const handlePurchase = (planName: string) => {
+    setLoadingPlan(planName);
+    
+    // Simulate checkout process
+    setTimeout(() => {
+      setLoadingPlan(null);
+      setSuccessPlan(planName);
+      
+      // Reset success after 5 seconds
+      setTimeout(() => setSuccessPlan(null), 5000);
+    }, 2000);
+  };
+
   const plans = [
     {
       name: "STARTER",
@@ -46,7 +64,15 @@ export default function Pricing() {
 
         <div className="grid md:grid-cols-3 gap-1">
           {plans.map((plan, idx) => (
-            <div key={idx} className={`card-brutal p-12 flex flex-col justify-between group ${plan.accent ? "bg-white text-black border-none" : ""}`}>
+            <div key={idx} className={`card-brutal p-12 flex flex-col justify-between group relative ${plan.accent ? "bg-white text-black border-none" : ""}`}>
+              {successPlan === plan.name && (
+                <div className="absolute inset-0 z-50 bg-primary flex flex-col items-center justify-center text-black p-6 text-center animate-fade-in">
+                  <PartyPopper size={64} className="mb-4 animate-bounce" />
+                  <h3 className="text-3xl font-bold uppercase mb-2">¡EXCELENTE ELECCIÓN!</h3>
+                  <p className="font-bold text-sm">Estamos configurando tu instancia {plan.name}. Recibirás un email en segundos.</p>
+                </div>
+              )}
+
               <div>
                 <div className="flex justify-between items-center mb-10">
                   <span className={`text-xs font-black tracking-widest ${plan.accent ? "text-black/50" : "text-primary"}`}>
@@ -75,11 +101,23 @@ export default function Pricing() {
                 </ul>
               </div>
 
-              <button className={`btn-boutique w-full justify-center !py-6 !text-sm ${
+              <button 
+                onClick={() => handlePurchase(plan.name)}
+                disabled={loadingPlan !== null}
+                className={`btn-boutique w-full justify-center !py-6 !text-sm disabled:opacity-50 ${
                 plan.accent ? "bg-black text-white hover:bg-black/90 !border-white !shadow-white/20" : ""
               }`}>
-                Contratar Ahora
-                <ArrowRight size={18} strokeWidth={3} />
+                {loadingPlan === plan.name ? (
+                  <>
+                    Procesando...
+                    <Loader2 size={18} className="animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    Contratar Ahora
+                    <ArrowRight size={18} strokeWidth={3} />
+                  </>
+                )}
               </button>
             </div>
           ))}
