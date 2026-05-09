@@ -26,6 +26,36 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [resendTimer, setResendTimer] = useState(0);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (resendTimer > 0) {
+      interval = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [resendTimer]);
+
+  const handleResend = async () => {
+    if (resendTimer > 0) return;
+    setIsLoading(true);
+    setError(null);
+    try {
+      const { error } = await authClient.emailOtp.sendVerificationOtp({ 
+        email, 
+        type: 'sign-in' 
+      });
+      if (error) throw new Error(error.message);
+      setResendTimer(60);
+    } catch (err: any) {
+      setError("No se pudo reenviar: " + err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (!isOpen || !plan) return null;
 
   const handleSendEmail = async (e: React.FormEvent) => {
@@ -193,13 +223,25 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
               >
                 {isLoading ? <Loader2 size={24} className="animate-spin" /> : "Confirmar Identidad & Pagar"}
               </button>
-              <button 
-                type="button" 
-                onClick={() => setStep('email')}
-                className="text-[10px] font-black uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
-              >
-                Cambiar Correo Electrónico
-              </button>
+              
+              <div className="flex flex-col items-center gap-4">
+                <button 
+                  type="button" 
+                  onClick={handleResend}
+                  disabled={resendTimer > 0 || isLoading}
+                  className="text-[10px] font-black uppercase tracking-widest opacity-60 hover:opacity-100 disabled:opacity-20 transition-all"
+                >
+                  {resendTimer > 0 ? `Reenviar código en ${resendTimer}s` : "¿No recibiste el código? Reenviar"}
+                </button>
+                
+                <button 
+                  type="button" 
+                  onClick={() => setStep('email')}
+                  className="text-[10px] font-black uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity underline decoration-primary/30"
+                >
+                  Cambiar Correo Electrónico
+                </button>
+              </div>
             </form>
           </div>
         )}
