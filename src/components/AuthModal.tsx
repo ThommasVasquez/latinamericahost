@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { X, Mail, ShieldCheck, ArrowRight, Loader2, CheckCircle2 } from "lucide-react";
+import { X, Mail, ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
 
 interface Plan {
   name: string;
@@ -17,117 +17,21 @@ interface AuthModalProps {
   onSuccess: () => void;
 }
 
-import { authClient } from "@/lib/auth/client";
-
-export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModalProps) {
-  const [step, setStep] = useState<'summary' | 'email' | 'code' | 'success'>('summary');
+export default function AuthModal({ isOpen, onClose, plan }: AuthModalProps) {
+  const [step, setStep] = useState<'summary' | 'email'>('summary');
   const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const [resendTimer, setResendTimer] = useState(0);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (resendTimer > 0) {
-      interval = setInterval(() => {
-        setResendTimer((prev) => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [resendTimer]);
-
-  const handleResend = async () => {
-    if (resendTimer > 0) return;
-    setIsLoading(true);
-    setError(null);
-    try {
-      const { error } = await authClient.emailOtp.sendVerificationOtp({ 
-        email, 
-        type: 'sign-in' 
-      });
-      if (error) throw new Error(error.message);
-      setResendTimer(60);
-    } catch (err: any) {
-      setError("No se pudo reenviar: " + err.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   if (!isOpen || !plan) return null;
 
   const handleSendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError(null);
     
-    try {
-      // Intenta registrar al usuario primero para disparar la verificación real de Neon
-      const { data, error: signUpError } = await authClient.signUp.email({
-        email,
-        password: "TempPassword123!", // Contraseña temporal requerida por Better Auth
-        name: email.split('@')[0],
-      });
-      
-      if (signUpError) {
-        // Si el usuario ya existe, procedemos con el envío de OTP para login
-        if (signUpError.status === 422 || signUpError.message?.includes("already exists")) {
-          const { error: otpError } = await authClient.emailOtp.sendVerificationOtp({ 
-            email, 
-            type: 'sign-in' 
-          });
-          if (otpError) throw new Error(otpError.message);
-        } else {
-          throw new Error(signUpError.message);
-        }
-      }
-      
-      setStep('code');
-      setResendTimer(60);
-    } catch (err: any) {
-      console.error("OTP Flow Exception:", err);
-      // Extra debug for the user to see in browser console
-      if (err.signUpError) console.error("Sign Up Error Detail:", err.signUpError);
-      if (err.otpError) console.error("OTP Error Detail:", err.otpError);
-      
-      setError(err.message || "No se pudo procesar tu solicitud. Intenta de nuevo.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleVerifyCode = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError(null);
-    
-    try {
-      // Verificamos el código usando el plugin de OTP
-      const { data, error } = await authClient.emailOtp.verifyEmail({ 
-        email, 
-        otp: code 
-      });
-      
-      if (error) {
-        // Si falla la verificación directa de email, intentamos como sign-in
-        const { error: signInError } = await authClient.signIn.emailOtp({
-          email,
-          otp: code
-        });
-        if (signInError) throw new Error(signInError.message || "Código inválido o expirado.");
-      }
-      
-      setStep('success');
-      setTimeout(() => {
-        onSuccess();
-      }, 2000);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
+    // Redirección inmediata a la pasarela de pagos
+    setTimeout(() => {
+      window.location.href = "https://checkout.bold.co/payment/LNK_MQNYJ0DANX";
+    }, 800);
   };
 
   return (
@@ -181,8 +85,8 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
         {step === 'email' && (
           <div className="animate-fade-in">
             <div className="badge mb-6 text-black">Paso 02 // Identidad</div>
-            <h2 className="text-4xl font-bold uppercase tracking-tighter mb-4">Iniciar <span className="text-primary">Sesión</span></h2>
-            <p className="text-muted font-medium mb-10">Ingresa tu correo institucional o personal para continuar con el despliegue.</p>
+            <h2 className="text-4xl font-bold uppercase tracking-tighter mb-4">Ingresa tu <span className="text-primary">Correo</span></h2>
+            <p className="text-muted font-medium mb-10">Ingresa tu email para asociarlo a tu nueva cuenta de hosting.</p>
 
             <form onSubmit={handleSendEmail} className="space-y-6">
               <div className="relative">
@@ -197,88 +101,14 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
                 <Mail className="absolute right-6 top-1/2 -translate-y-1/2 text-white/20" size={24} />
               </div>
               
-              {error && (
-                <div className="bg-red-500/10 border border-red-500/20 p-4 text-red-500 text-xs font-bold uppercase tracking-widest animate-shake">
-                  Error: {error}
-                </div>
-              )}
-
               <button 
                 type="submit" 
                 disabled={isLoading}
                 className="btn-boutique w-full justify-center"
               >
-                {isLoading ? <Loader2 size={24} className="animate-spin" /> : "Enviar Código de Acceso"}
+                {isLoading ? <Loader2 size={24} className="animate-spin" /> : "Proceder al Pago Seguro"}
               </button>
             </form>
-          </div>
-        )}
-
-        {step === 'code' && (
-          <div className="animate-fade-in text-center md:text-left">
-            <div className="badge mb-6 text-black">Paso 03 // Verificación</div>
-            <h2 className="text-4xl font-bold uppercase tracking-tighter mb-4">Verifica tu <span className="text-primary">Email</span></h2>
-            <p className="text-muted font-medium mb-10">
-              Hemos enviado un código de seguridad a <span className="text-white font-bold">{email}</span>.
-            </p>
-
-            <form onSubmit={handleVerifyCode} className="space-y-6">
-              <input 
-                type="text" 
-                maxLength={6}
-                required
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                placeholder="0 0 0 0 0 0"
-                className="w-full bg-white/5 border-2 border-white/10 p-6 text-center text-5xl font-black tracking-[1rem] outline-none focus:border-primary transition-colors placeholder:text-white/10 uppercase"
-              />
-
-              {error && (
-                <div className="bg-red-500/10 border border-red-500/20 p-4 text-red-500 text-xs font-bold uppercase tracking-widest animate-shake">
-                  Error: {error}
-                </div>
-              )}
-
-              <button 
-                type="submit" 
-                disabled={isLoading}
-                className="btn-boutique w-full justify-center"
-              >
-                {isLoading ? <Loader2 size={24} className="animate-spin" /> : "Confirmar Identidad & Pagar"}
-              </button>
-              
-              <div className="flex flex-col items-center gap-4">
-                <button 
-                  type="button" 
-                  onClick={handleResend}
-                  disabled={resendTimer > 0 || isLoading}
-                  className="text-[10px] font-black uppercase tracking-widest opacity-60 hover:opacity-100 disabled:opacity-20 transition-all"
-                >
-                  {resendTimer > 0 ? `Reenviar código en ${resendTimer}s` : "¿No recibiste el código? Reenviar"}
-                </button>
-                
-                <button 
-                  type="button" 
-                  onClick={() => setStep('email')}
-                  className="text-[10px] font-black uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity underline decoration-primary/30"
-                >
-                  Cambiar Correo Electrónico
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-
-        {step === 'success' && (
-          <div className="text-center py-10 animate-fade-in">
-            <div className="w-24 h-24 bg-primary text-black rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_50px_rgba(194,253,77,0.4)]">
-              <ShieldCheck size={48} strokeWidth={3} />
-            </div>
-            <h2 className="text-5xl font-bold uppercase tracking-tighter mb-4">Identidad <span className="text-primary">Verificada</span></h2>
-            <p className="text-xl font-medium text-muted mb-8">Redirigiendo a la pasarela de pagos segura...</p>
-            <div className="flex justify-center">
-              <Loader2 size={32} className="animate-spin text-primary" />
-            </div>
           </div>
         )}
       </div>
