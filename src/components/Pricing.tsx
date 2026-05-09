@@ -22,24 +22,24 @@ export default function Pricing() {
   const plans = [
     {
       name: "STARTER",
-      price: "2.99",
-      period: "MO",
+      price: "350.000",
+      period: "AÑO",
       desc: "Perfecto para experimentos y proyectos personales.",
       features: ["1 Dominio", "10GB SSD", "SSL Gratis", "Soporte Standard"],
       accent: false
     },
     {
       name: "PROFESSIONAL",
-      price: "9.99",
-      period: "MO",
+      price: "520.000",
+      period: "AÑO",
       desc: "Para negocios que crecen rápido y necesitan potencia.",
       features: ["5 Dominios", "50GB NVMe", "SSL + WAF Pro", "Soporte Prioritario", "Hourly Backups"],
       accent: true
     },
     {
       name: "ENTERPRISE",
-      price: "24.99",
-      period: "MO",
+      price: "780.000",
+      period: "AÑO",
       desc: "Infraestructura dedicada para proyectos de alto tráfico.",
       features: ["Dominios Ilimitados", "Recursos Dedicados", "IP Dedicada", "24/7 VIP Support", "CDN Global"],
       accent: false
@@ -82,9 +82,9 @@ export default function Pricing() {
                 </div>
                 
                 <div className="flex items-start gap-1 mb-6">
-                  <span className="text-2xl font-bold mt-2">$</span>
-                  <span className="text-7xl font-bold tracking-tighter">{plan.price}</span>
-                  <span className="text-lg font-bold self-end mb-2">/{plan.period}</span>
+                  <span className="text-xl font-bold mt-2">COP $</span>
+                  <span className="text-5xl md:text-7xl font-bold tracking-tighter">{plan.price}</span>
+                  <span className="text-xs font-bold self-end mb-2">/{plan.period}</span>
                 </div>
                 
                 <p className={`font-medium mb-10 ${plan.accent ? "text-black/60" : "text-muted"}`}>
