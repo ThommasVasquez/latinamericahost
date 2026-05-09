@@ -1,0 +1,18 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Shadow -->
+  <rect x="8" y="8" width="44" height="44" fill="#c2fd4d" />
+  <!-- Icon Container -->
+  <rect x="4" y="4" width="44" height="44" fill="black" stroke="black" stroke-width="2"/>
+  <!-- Globe Icon (Simplified) -->
+  <path d="M26 12C18.268 12 12 18.268 12 26C12 33.732 18.268 40 26 40C33.732 40 40 33.732 40 26C40 18.268 33.732 12 26 12ZM26 14C32.6274 14 38 19.3726 38 26C38 32.6274 32.6274 38 26 38C19.3726 38 14 32.6274 14 26C14 19.3726 19.3726 14 26 14ZM25 14.1716V37.8284C20.3333 36.4167 17 31.6667 17 26C17 20.3333 20.3333 15.5833 25 14.1716ZM27 14.1716C31.6667 15.5833 35 20.3333 35 26C35 31.6667 31.6667 36.4167 27 14.1716V37.8284Z" fill="#c2fd4d"/>
+  
+  <!-- Text: LATINHOST -->
+  <text x="60" y="32" fill="white" style="font-family: Arial, sans-serif; font-weight: 900; font-size: 24px; letter-spacing: -1px;">LATINHOST</text>
+  
+  <!-- Box: INC -->
+  <rect x="155" y="14" width="35" height="20" fill="#c2fd4d" transform="rotate(3 155 14)" />
+  <text x="158" y="29" fill="black" style="font-family: Arial, sans-serif; font-weight: 900; font-size: 14px;" transform="rotate(3 158 29)">INC</text>
+  
+  <!-- Tagline -->
+  <text x="60" y="48" fill="white" opacity="0.4" style="font-family: Arial, sans-serif; font-weight: 700; font-size: 8px; letter-spacing: 2px;">INFRASTRUCTURE // 2026</text>
+</svg>

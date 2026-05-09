@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { Globe } from 'lucide-react';
 
@@ -20,7 +21,7 @@ export default function Logo({ className = "", size = "normal" }: { className?: 
       </div>
       
       <div className="flex flex-col leading-none">
-        <span className={`${s.text} flex items-center gap-2`}>
+        <span className={`${s.text} flex items-center gap-2 text-white`}>
           LATINHOST
           <span className={`bg-primary text-black font-black ${s.box} rotate-3 shadow-[2px_2px_0px_rgba(0,0,0,1)]`}>
             INC
