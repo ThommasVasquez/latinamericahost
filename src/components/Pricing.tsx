@@ -2,26 +2,32 @@
 import { useState } from "react";
 import { Check, ArrowRight, Loader2, PartyPopper } from "lucide-react";
 
-export default function Pricing() {
-  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-  const [successPlan, setSuccessPlan] = useState<string | null>(null);
+import AuthModal from "./AuthModal";
 
-  const handlePurchase = (planName: string) => {
-    setLoadingPlan(planName);
-    
-    // Simulate checkout process
-    setTimeout(() => {
-      setLoadingPlan(null);
-      setSuccessPlan(planName);
-      
-      // Redirect to payment link after success message
-      setTimeout(() => {
-        window.location.href = "https://checkout.bold.co/payment/LNK_MQNYJ0DANX";
-      }, 2500);
-    }, 2000);
+interface Plan {
+  name: string;
+  price: string;
+  period: string;
+  desc: string;
+  features: string[];
+  accent: boolean;
+}
+
+export default function Pricing() {
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+
+  const handlePurchaseClick = (plan: Plan) => {
+    setSelectedPlan(plan);
+    setIsAuthOpen(true);
   };
 
-  const plans = [
+  const handleAuthSuccess = () => {
+    setIsAuthOpen(false);
+    window.location.href = "https://checkout.bold.co/payment/LNK_MQNYJ0DANX";
+  };
+
+  const plans: Plan[] = [
     {
       name: "STARTER",
       price: "350.000",
@@ -67,14 +73,6 @@ export default function Pricing() {
         <div className="grid md:grid-cols-3 gap-1">
           {plans.map((plan, idx) => (
             <div key={idx} className={`card-brutal p-12 flex flex-col justify-between group relative ${plan.accent ? "bg-white text-black border-none" : ""}`}>
-              {successPlan === plan.name && (
-                <div className="absolute inset-0 z-50 bg-primary flex flex-col items-center justify-center text-black p-6 text-center animate-fade-in">
-                  <PartyPopper size={64} className="mb-4 animate-bounce" />
-                  <h3 className="text-3xl font-bold uppercase mb-2">¡EXCELENTE ELECCIÓN!</h3>
-                  <p className="font-bold text-sm">Estamos configurando tu instancia {plan.name}. Recibirás un email en segundos.</p>
-                </div>
-              )}
-
               <div>
                 <div className="flex justify-between items-center mb-10">
                   <span className={`text-xs font-black tracking-widest ${plan.accent ? "text-black/50" : "text-primary"}`}>
@@ -104,27 +102,24 @@ export default function Pricing() {
               </div>
 
               <button 
-                onClick={() => handlePurchase(plan.name)}
-                disabled={loadingPlan !== null}
-                className={`btn-boutique w-full justify-center !py-6 !text-sm disabled:opacity-50 ${
+                onClick={() => handlePurchaseClick(plan)}
+                className={`btn-boutique w-full justify-center !py-6 !text-sm ${
                 plan.accent ? "bg-black text-white hover:bg-black/90 !border-white !shadow-white/20" : ""
               }`}>
-                {loadingPlan === plan.name ? (
-                  <>
-                    Procesando...
-                    <Loader2 size={18} className="animate-spin" />
-                  </>
-                ) : (
-                  <>
-                    Contratar Ahora
-                    <ArrowRight size={18} strokeWidth={3} />
-                  </>
-                )}
+                Contratar Ahora
+                <ArrowRight size={18} strokeWidth={3} />
               </button>
             </div>
           ))}
         </div>
       </div>
+
+      <AuthModal 
+        isOpen={isAuthOpen} 
+        onClose={() => setIsAuthOpen(false)} 
+        plan={selectedPlan}
+        onSuccess={handleAuthSuccess}
+      />
     </section>
   );
 }
