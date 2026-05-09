@@ -72,6 +72,11 @@ export default function Pricing() {
               <p className="bg-black text-white py-4 px-6 inline-block rotate-1 shadow-xl">
                 Hemos enviado un correo a <span className="text-primary">{userEmail}</span> con tus credenciales de acceso al hosting dinámico VPS.
               </p>
+              <div className="pt-4">
+                <span className="text-sm font-black uppercase tracking-[0.2em] opacity-40">
+                  Nota: El correo con los datos de acceso puede tardar hasta 2 horas en llegar.
+                </span>
+              </div>
             </div>
             
             <div className="grid md:grid-cols-3 gap-8 text-left mb-20">
