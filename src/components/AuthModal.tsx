@@ -14,7 +14,7 @@ interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   plan: Plan | null;
-  onSuccess: () => void;
+  onSuccess: (email: string) => void;
 }
 
 export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModalProps) {
@@ -34,7 +34,7 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
         setIsLoading(false);
         setStep('success');
         setTimeout(() => {
-          onSuccess();
+          onSuccess(email);
         }, 2000);
       }, 800);
       return;

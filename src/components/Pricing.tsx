@@ -16,16 +16,17 @@ export default function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   const handlePurchaseClick = (plan: Plan) => {
     setSelectedPlan(plan);
     setIsAuthOpen(true);
   };
 
-  const handleAuthSuccess = () => {
+  const handleAuthSuccess = (email: string) => {
+    setUserEmail(email);
     setIsAuthOpen(false);
     setIsSuccess(true);
-    // En un flujo real, aquí podríamos esperar a la confirmación del webhook de Bold
   };
 
   const plans: Plan[] = [
@@ -66,9 +67,12 @@ export default function Pricing() {
             <h2 className="text-7xl md:text-9xl font-black uppercase tracking-tighter mb-8 leading-none">
               ¡BIENVENIDO <br /> <span className="opacity-40">A LA ÉLITE!</span>
             </h2>
-            <p className="text-2xl md:text-4xl font-bold mb-16 max-w-2xl mx-auto leading-tight">
-              Tu plan <span className="underline decoration-4">{selectedPlan.name}</span> ha sido activado. El despliegue de tu infraestructura ha comenzado.
-            </p>
+            <div className="text-2xl md:text-4xl font-bold mb-16 max-w-3xl mx-auto leading-tight space-y-4">
+              <p>Tu plan <span className="underline decoration-4">{selectedPlan.name}</span> ha sido activado.</p>
+              <p className="bg-black text-white py-4 px-6 inline-block rotate-1 shadow-xl">
+                Hemos enviado un correo a <span className="text-primary">{userEmail}</span> con tus credenciales de acceso al hosting dinámico VPS.
+              </p>
+            </div>
             
             <div className="grid md:grid-cols-3 gap-8 text-left mb-20">
               <div className="bg-black/5 p-8 border-l-4 border-black">
