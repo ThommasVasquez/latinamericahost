@@ -1,8 +1,12 @@
 import { createNeonAuth } from '@neondatabase/auth/next/server';
 
-// Hack para Cloudflare: Si DATABASE_URL está reservado, usamos NEON_DATABASE_URL
-if (!process.env.DATABASE_URL && process.env.NEON_DATABASE_URL) {
-  process.env.DATABASE_URL = process.env.NEON_DATABASE_URL;
+// Hack para Cloudflare: Sincronizar variables de entorno
+if (typeof process !== 'undefined') {
+  if (!process.env.DATABASE_URL && process.env.NEON_DATABASE_URL) {
+    process.env.DATABASE_URL = process.env.NEON_DATABASE_URL;
+  }
+  // La URL base para Better Auth debe ser la de tu dominio real
+  process.env.BETTER_AUTH_URL = "https://latinamericahost.pages.dev/api/auth";
 }
 
 export const auth = createNeonAuth({
