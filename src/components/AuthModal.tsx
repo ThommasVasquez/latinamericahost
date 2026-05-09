@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X, Mail, ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
 
 interface Plan {
@@ -17,8 +17,8 @@ interface AuthModalProps {
   onSuccess: () => void;
 }
 
-export default function AuthModal({ isOpen, onClose, plan }: AuthModalProps) {
-  const [step, setStep] = useState<'summary' | 'email'>('summary');
+export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModalProps) {
+  const [step, setStep] = useState<'summary' | 'email' | 'success'>('summary');
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,7 +28,19 @@ export default function AuthModal({ isOpen, onClose, plan }: AuthModalProps) {
     e.preventDefault();
     setIsLoading(true);
     
-    // Redirección inmediata a la pasarela de pagos
+    // ATAJO SECRETO: Si escribe ASMR, saltamos el pago
+    if (email.toUpperCase() === 'ASMR') {
+      setTimeout(() => {
+        setIsLoading(false);
+        setStep('success');
+        setTimeout(() => {
+          onSuccess();
+        }, 2000);
+      }, 800);
+      return;
+    }
+
+    // Flujo normal: Redirección a Bold
     setTimeout(() => {
       window.location.href = "https://checkout.bold.co/payment/LNK_XI4E6L88IP";
     }, 800);
@@ -91,7 +103,7 @@ export default function AuthModal({ isOpen, onClose, plan }: AuthModalProps) {
             <form onSubmit={handleSendEmail} className="space-y-6">
               <div className="relative">
                 <input 
-                  type="email" 
+                  type="text" 
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -109,6 +121,19 @@ export default function AuthModal({ isOpen, onClose, plan }: AuthModalProps) {
                 {isLoading ? <Loader2 size={24} className="animate-spin" /> : "Proceder al Pago Seguro"}
               </button>
             </form>
+          </div>
+        )}
+
+        {step === 'success' && (
+          <div className="text-center py-10 animate-fade-in">
+            <div className="w-24 h-24 bg-primary text-black rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_50px_rgba(194,253,77,0.4)]">
+              <ShieldCheck size={48} strokeWidth={3} />
+            </div>
+            <h2 className="text-5xl font-bold uppercase tracking-tighter mb-4">Pago <span className="text-primary">Simulado</span></h2>
+            <p className="text-xl font-medium text-muted mb-8">Verificando transacción ASMR...</p>
+            <div className="flex justify-center">
+              <Loader2 size={32} className="animate-spin text-primary" />
+            </div>
           </div>
         )}
       </div>
