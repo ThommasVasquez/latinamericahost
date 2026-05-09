@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Check, ArrowRight, Loader2, PartyPopper } from "lucide-react";
-
+import { Check, ArrowRight, PartyPopper, Rocket, ShieldCheck, Github } from "lucide-react";
 import AuthModal from "./AuthModal";
 
 interface Plan {
@@ -16,6 +15,7 @@ interface Plan {
 export default function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handlePurchaseClick = (plan: Plan) => {
     setSelectedPlan(plan);
@@ -24,7 +24,8 @@ export default function Pricing() {
 
   const handleAuthSuccess = () => {
     setIsAuthOpen(false);
-    window.location.href = "https://checkout.bold.co/payment/LNK_MQNYJ0DANX";
+    setIsSuccess(true);
+    // En un flujo real, aquí podríamos esperar a la confirmación del webhook de Bold
   };
 
   const plans: Plan[] = [
@@ -53,6 +54,52 @@ export default function Pricing() {
       accent: false
     }
   ];
+
+  if (isSuccess && selectedPlan) {
+    return (
+      <section className="py-40 bg-primary text-black min-h-[80vh] flex items-center">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center animate-fade-in">
+            <div className="w-32 h-32 bg-black text-primary rounded-full flex items-center justify-center mx-auto mb-12 shadow-[0_0_80px_rgba(0,0,0,0.2)] animate-bounce">
+              <PartyPopper size={64} />
+            </div>
+            <h2 className="text-7xl md:text-9xl font-black uppercase tracking-tighter mb-8 leading-none">
+              ¡BIENVENIDO <br /> <span className="opacity-40">A LA ÉLITE!</span>
+            </h2>
+            <p className="text-2xl md:text-4xl font-bold mb-16 max-w-2xl mx-auto leading-tight">
+              Tu plan <span className="underline decoration-4">{selectedPlan.name}</span> ha sido activado. El despliegue de tu infraestructura ha comenzado.
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-8 text-left mb-20">
+              <div className="bg-black/5 p-8 border-l-4 border-black">
+                <Rocket className="mb-4" />
+                <h4 className="font-black uppercase text-sm mb-2">Paso 01</h4>
+                <p className="text-sm font-bold">Provisionando Servidores NVMe</p>
+              </div>
+              <div className="bg-black/5 p-8 border-l-4 border-black">
+                <ShieldCheck className="mb-4" />
+                <h4 className="font-black uppercase text-sm mb-2">Paso 02</h4>
+                <p className="text-sm font-bold">Configurando SSL & WAF</p>
+              </div>
+              <div className="bg-black/5 p-8 border-l-4 border-black">
+                <Github className="mb-4" />
+                <h4 className="font-black uppercase text-sm mb-2">Paso 03</h4>
+                <p className="text-sm font-bold">Enlazando Repositorios</p>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => window.location.reload()}
+              className="btn-boutique bg-black text-white hover:bg-black/90 !px-12 !py-6"
+            >
+              Ir al Panel de Control
+              <ArrowRight size={20} />
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="pricing" className="py-32 bg-surface/20">
