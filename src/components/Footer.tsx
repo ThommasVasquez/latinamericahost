@@ -1,4 +1,5 @@
 import { Globe, Mail } from "lucide-react";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
@@ -6,12 +7,7 @@ export default function Footer() {
       <div className="container">
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <Globe className="text-primary" size={24} />
-              <span className="text-xl font-bold tracking-tighter uppercase font-heading">
-                LATINHOST <span className="text-primary">INC</span>
-              </span>
-            </div>
+            <Logo size="small" className="mb-6" />
             <p className="text-muted text-xs font-bold leading-relaxed uppercase tracking-wider">
               Infraestructura de clase mundial para creadores de Latinoamérica. 
             </p>

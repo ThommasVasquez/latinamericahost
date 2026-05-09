@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Globe, Menu, X } from "lucide-react";
+import Logo from "./Logo";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -20,12 +21,7 @@ export default function Navbar() {
       style={{ borderBottom: `1px solid ${isScrolled ? "rgba(255, 255, 255, 0.05)" : "transparent"}` }}
     >
       <div className="container flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Globe className="text-primary" size={28} />
-          <span className="text-2xl font-bold tracking-tighter uppercase font-heading">
-            LATINHOST <span className="text-primary">INC</span>
-          </span>
-        </div>
+        <Logo />
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-10 font-bold uppercase text-[10px] tracking-[0.2em]">
