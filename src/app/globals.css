@@ -142,38 +142,64 @@ a {
 .btn-boutique {
   background: var(--primary);
   color: black;
-  padding: 1.2rem 2.5rem;
+  padding: 1rem 2rem;
   border-radius: 0;
   font-weight: 800;
   font-family: var(--font-heading);
   text-transform: uppercase;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   letter-spacing: 0.05em;
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  border: 1px solid black;
-  box-shadow: 4px 4px 0px 0px black;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 2px solid black;
+  box-shadow: 6px 6px 0px 0px black;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  cursor: pointer;
 }
 
 .btn-boutique:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0px 0px black;
+  transform: translate(-3px, -3px);
+  box-shadow: 10px 10px 0px 0px black;
 }
 
 .btn-boutique:active {
-  transform: translate(2px, 2px);
+  transform: translate(3px, 3px);
   box-shadow: 0px 0px 0px 0px black;
 }
 
 .btn-boutique svg {
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-boutique:hover svg {
-  transform: translateX(4px) rotate(-10deg);
+  transform: translateX(4px) rotate(-15deg);
+}
+
+.btn-icon {
+  background: white;
+  color: black;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid black;
+  box-shadow: 4px 4px 0px 0px black;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-icon:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px black;
+  background: var(--primary);
+}
+
+.btn-icon:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px black;
 }
 
 .btn-secondary {

@@ -67,19 +67,27 @@ export default function HostingTypes() {
                     </li>
                   ))}
                 </ul>
-                <button className="text-white hover:text-primary transition-colors">
-                  <ArrowUpRight size={32} />
+                <button className="btn-icon">
+                  <ArrowUpRight size={24} strokeWidth={3} />
                 </button>
               </div>
             </div>
           ))}
           
-          <div className="card-brutal bento-item-tall bg-white text-black border-none flex flex-col justify-between">
-            <h3 className="text-4xl font-bold leading-none uppercase">DOMINIOS <br />PREMIUM</h3>
-            <p className="font-bold text-sm">Gestiona tu identidad digital con las herramientas más potentes de la industria.</p>
-            <button className="btn-boutique w-full bg-black text-white rounded-none">
-              Registrar Ahora
-            </button>
+          <div className="card-brutal bento-item-tall bg-[#111] text-white border-white/5 flex flex-col justify-between overflow-hidden">
+            <div className="relative z-10">
+              <h3 className="text-4xl font-bold leading-none uppercase mb-6">DOMINIOS <br />PREMIUM</h3>
+              <p className="font-bold text-sm opacity-60">Gestiona tu identidad digital con las herramientas más potentes de la industria.</p>
+            </div>
+            
+            <div className="relative z-10 mt-12">
+              <button className="btn-boutique w-full justify-center !shadow-none hover:!shadow-none bg-primary text-black">
+                Registrar Ahora
+              </button>
+            </div>
+
+            {/* Decorative element */}
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary opacity-5 rotate-12 blur-2xl"></div>
           </div>
         </div>
       </div>
