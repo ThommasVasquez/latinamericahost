@@ -127,7 +127,17 @@ export default function Hero() {
                       </div>
                     </div>
                     {searchResult.status === 'available' && (
-                      <button className="btn-boutique w-full md:w-auto">
+                      <button 
+                        onClick={(e) => {
+                          const btn = e.currentTarget;
+                          btn.innerHTML = 'Procesando...';
+                          btn.disabled = true;
+                          setTimeout(() => {
+                            window.location.href = "https://checkout.bold.co/payment/LNK_MQNYJ0DANX";
+                          }, 1500);
+                        }}
+                        className="btn-boutique w-full md:w-auto"
+                      >
                         Registrar Ahora — $12.99
                       </button>
                     )}

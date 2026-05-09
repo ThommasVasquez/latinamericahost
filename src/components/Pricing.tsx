@@ -14,8 +14,10 @@ export default function Pricing() {
       setLoadingPlan(null);
       setSuccessPlan(planName);
       
-      // Reset success after 5 seconds
-      setTimeout(() => setSuccessPlan(null), 5000);
+      // Redirect to payment link after success message
+      setTimeout(() => {
+        window.location.href = "https://checkout.bold.co/payment/LNK_MQNYJ0DANX";
+      }, 2500);
     }, 2000);
   };
 
