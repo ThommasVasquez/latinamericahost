@@ -10,6 +10,7 @@
     "pages:build": "npx @cloudflare/next-on-pages"
   },
   "dependencies": {
+    "@neondatabase/auth": "^0.4.0-beta",
     "@neondatabase/serverless": "^1.1.0",
     "better-auth": "^1.6.10",
     "lucide-react": "^1.14.0",
