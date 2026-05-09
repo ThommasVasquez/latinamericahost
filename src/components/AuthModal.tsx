@@ -70,12 +70,14 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
       });
       
       if (error) {
-        throw new Error(error.message || "No se pudo enviar el código. Revisa tu correo.");
+        console.error("Neon Auth Error:", error);
+        throw new Error(error.message || "Error del servidor de autenticación.");
       }
       
       setStep('code');
     } catch (err: any) {
-      setError(err.message);
+      console.error("OTP Send Exception:", err);
+      setError(err.message || "No se pudo enviar el código. Intenta de nuevo.");
     } finally {
       setIsLoading(false);
     }
