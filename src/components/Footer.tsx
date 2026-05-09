@@ -1,6 +1,17 @@
 import { Globe, Mail } from "lucide-react";
 import Logo from "./Logo";
 
+const MinTICLogo = () => (
+  <svg viewBox="0 0 500 150" className="h-10 w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M40 20H100V40H60V60H90V80H60V120H40V20Z" fill="white"/>
+    <path d="M120 20H140V120H120V20Z" fill="#F4B400"/>
+    <rect x="150" y="20" width="20" height="100" fill="#003893"/>
+    <rect x="180" y="20" width="20" height="100" fill="#CE1126"/>
+    <text x="210" y="85" fill="white" style={{ font: "bold 45px Inter, sans-serif", letterSpacing: "-0.05em" }}>MinTIC</text>
+    <text x="210" y="115" fill="white" style={{ font: "800 12px Inter, sans-serif", letterSpacing: "0.5em", opacity: 0.5 }}>COLOMBIA</text>
+  </svg>
+);
+
 export default function Footer() {
   return (
     <footer className="pt-20 pb-10 border-t border-white/5 bg-surface/50">
@@ -12,15 +23,11 @@ export default function Footer() {
               Infraestructura de clase mundial para creadores de Latinoamérica. 
             </p>
             
-            {/* MinTIC Section con Logo Estable */}
+            {/* MinTIC Section con SVG Embebido (Carga garantizada) */}
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-4 bg-white/5 p-4 border-l-2 border-primary/40">
-                <div className="h-10 w-16 flex items-center justify-center bg-white rounded-sm p-1">
-                  <img 
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Logo_del_Ministerio_de_Tecnolog%C3%ADas_de_la_Informaci%C3%B3n_y_las_Comunicaciones.svg/512px-Logo_del_Ministerio_de_Tecnolog%C3%ADas_de_la_Informaci%C3%B3n_y_las_Comunicaciones.svg.png" 
-                    alt="MinTIC Colombia" 
-                    className="h-full w-auto object-contain"
-                  />
+                <div className="flex items-center justify-center">
+                  <MinTICLogo />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[10px] font-black uppercase tracking-tighter leading-none opacity-40">Entidad Vigilada</span>
