@@ -17,35 +17,64 @@ interface AuthModalProps {
   onSuccess: () => void;
 }
 
+import { authClient } from "@/lib/auth/client";
+
 export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModalProps) {
   const [step, setStep] = useState<'summary' | 'email' | 'code' | 'success'>('summary');
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!isOpen || !plan) return null;
 
-  const handleSendEmail = (e: React.FormEvent) => {
+  const handleSendEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate sending email
-    setTimeout(() => {
-      setIsLoading(false);
+    setError(null);
+    
+    try {
+      const { error } = await authClient.emailOtp.sendVerificationOtp({ 
+        email, 
+        type: 'sign-in' 
+      });
+      
+      if (error) {
+        throw new Error(error.message || "No se pudo enviar el código. Revisa tu correo.");
+      }
+      
       setStep('code');
-    }, 1500);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleVerifyCode = (e: React.FormEvent) => {
+  const handleVerifyCode = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate verification
-    setTimeout(() => {
-      setIsLoading(false);
+    setError(null);
+    
+    try {
+      const { data, error } = await authClient.signIn.emailOtp({ 
+        email, 
+        otp: code 
+      });
+      
+      if (error) {
+        throw new Error(error.message || "Código inválido o expirado.");
+      }
+      
       setStep('success');
       setTimeout(() => {
         onSuccess();
       }, 2000);
-    }, 1500);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -114,6 +143,13 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
                 />
                 <Mail className="absolute right-6 top-1/2 -translate-y-1/2 text-white/20" size={24} />
               </div>
+              
+              {error && (
+                <div className="bg-red-500/10 border border-red-500/20 p-4 text-red-500 text-xs font-bold uppercase tracking-widest animate-shake">
+                  Error: {error}
+                </div>
+              )}
+
               <button 
                 type="submit" 
                 disabled={isLoading}
@@ -143,6 +179,13 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
                 placeholder="0 0 0 0 0 0"
                 className="w-full bg-white/5 border-2 border-white/10 p-6 text-center text-5xl font-black tracking-[1rem] outline-none focus:border-primary transition-colors placeholder:text-white/10 uppercase"
               />
+
+              {error && (
+                <div className="bg-red-500/10 border border-red-500/20 p-4 text-red-500 text-xs font-bold uppercase tracking-widest animate-shake">
+                  Error: {error}
+                </div>
+              )}
+
               <button 
                 type="submit" 
                 disabled={isLoading}
