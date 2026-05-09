@@ -46,8 +46,8 @@ export default function HostingTypes() {
 
         <div className="bento-grid">
           {types.map((type, idx) => (
-            <div key={idx} className={`card-brutal flex flex-col justify-between ${type.large ? "bento-item-large" : ""}`}>
-              <div>
+            <div key={idx} className={`card-brutal flex flex-col justify-between overflow-hidden ${type.large ? "bento-item-large" : ""}`}>
+              <div className="relative z-10">
                 <div className="flex justify-between items-start mb-12">
                   <div className="text-primary">{type.icon}</div>
                   <div className="text-[10px] font-black tracking-widest uppercase opacity-40">{type.tag}</div>
@@ -58,7 +58,13 @@ export default function HostingTypes() {
                 </p>
               </div>
               
-              <div className="flex justify-between items-end">
+              {type.large && (
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20rem] font-black text-white/[0.02] pointer-events-none select-none uppercase">
+                  HOST
+                </div>
+              )}
+
+              <div className="flex justify-between items-end relative z-10">
                 <ul className="flex flex-col gap-2">
                   {type.features.map((f, i) => (
                     <li key={i} className="text-xs font-black flex items-center gap-2">
@@ -74,20 +80,26 @@ export default function HostingTypes() {
             </div>
           ))}
           
-          <div className="card-brutal bento-item-tall bg-[#111] text-white border-white/5 flex flex-col justify-between overflow-hidden">
+          <div className="card-brutal bento-item-tall bg-black text-white border-white/10 flex flex-col justify-between overflow-hidden relative">
             <div className="relative z-10">
+              <div className="w-12 h-12 bg-primary text-black flex items-center justify-center mb-10 rotate-12">
+                <Cpu size={24} />
+              </div>
               <h3 className="text-4xl font-bold leading-none uppercase mb-6">DOMINIOS <br />PREMIUM</h3>
               <p className="font-bold text-sm opacity-60">Gestiona tu identidad digital con las herramientas más potentes de la industria.</p>
             </div>
             
-            <div className="relative z-10 mt-12">
+            <div className="relative z-10">
               <button className="btn-boutique w-full justify-center !shadow-none hover:!shadow-none bg-primary text-black">
                 Registrar Ahora
               </button>
             </div>
 
-            {/* Decorative element */}
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary opacity-5 rotate-12 blur-2xl"></div>
+            {/* Technical background decoration */}
+            <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                 style={{ backgroundImage: 'radial-gradient(var(--primary) 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
+            </div>
+            <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-primary opacity-10 rotate-12 blur-[80px]"></div>
           </div>
         </div>
       </div>
