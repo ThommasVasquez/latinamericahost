@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   title: "Latin Host Inc | Hosting de Alta Performance & Dominios",
   description: "La mejor plataforma para alojar tus sitios estáticos y dinámicos. Registro de dominios con la mejor velocidad y soporte.",
   keywords: ["hosting", "dominios", "latin host", "servidores", "hosting estatico", "hosting dinamico"],
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
