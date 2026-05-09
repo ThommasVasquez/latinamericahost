@@ -1,46 +1,54 @@
-import { Zap, Activity, ShieldCheck, Cpu, ArrowUpRight } from "lucide-react";
+"use client";
+import { Cpu, Zap, Globe, Shield, ArrowUpRight, Database } from "lucide-react";
 
 export default function HostingTypes() {
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const types = [
     {
       title: "ESTÁTICO",
       tag: "Pure Speed",
       description: "Optimizado para la velocidad de la luz. Portafolios, landings y blogs que cargan antes de que parpadees.",
-      icon: <Zap size={40} />,
-      features: ["CDN Global", "Despliegue Git", "SSL Ilimitado"],
+      features: ["CDN GLOBAL", "DESPLIEGUE GIT", "SSL ILIMITADO"],
+      icon: <Zap size={40} strokeWidth={2.5} />,
       large: true
     },
     {
       title: "DINÁMICO",
       tag: "Pro Infrastructure",
       description: "Para apps complejas y e-commerce. Node, Python, PHP con bases de datos SQL dedicadas.",
-      icon: <Activity size={40} />,
-      features: ["Auto-Scaling", "Daily Backups", "Full API Access"],
+      features: ["AUTO-SCALING", "DAILY BACKUPS", "FULL API ACCESS"],
+      icon: <Database size={32} strokeWidth={2.5} />,
       large: false
     },
     {
       title: "SEGURIDAD",
       tag: "Enterprise Grade",
       description: "Certificados SSL, protección DDoS y backups redundantes en múltiples regiones.",
-      icon: <ShieldCheck size={40} />,
-      features: ["WAF", "DDoS Protection", "Backup Redundancy"],
+      features: ["WAF", "DDOS PROTECTION", "BACKUP REDUNDANCY"],
+      icon: <Shield size={32} strokeWidth={2.5} />,
       large: false
     }
   ];
 
   return (
-    <section id="hosting" className="py-32">
+    <section id="hosting" className="py-32 bg-black">
       <div className="container">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        <div className="flex flex-col md:flex-row items-end justify-between mb-24 gap-12">
           <div className="max-w-2xl">
-            <div className="badge">Nuestros Servicios</div>
-            <h2 className="text-5xl md:text-7xl font-bold leading-none tracking-tighter uppercase">
-              Infraestructura <br />
-              <span className="text-primary">Sin Concesiones.</span>
+            <div className="badge">Infraestructura</div>
+            <h2 className="text-6xl md:text-8xl font-bold leading-none tracking-tighter uppercase">
+              Elige tu <br />
+              <span className="text-primary">Arquitectura.</span>
             </h2>
           </div>
-          <p className="text-muted font-medium max-w-sm mb-2">
-            No somos el hosting más barato del mercado, somos el que mejor cuida tus bits. Ingeniería pura aplicada a tu presencia digital.
+          <p className="text-muted font-medium max-w-sm">
+            Nuestros servidores están optimizados para el máximo rendimiento. Elige el plan que mejor se adapte a tus necesidades técnicas.
           </p>
         </div>
 
@@ -73,7 +81,10 @@ export default function HostingTypes() {
                     </li>
                   ))}
                 </ul>
-                <button className="btn-icon">
+                <button 
+                  onClick={() => scrollToSection('pricing')}
+                  className="btn-icon"
+                >
                   <ArrowUpRight size={24} strokeWidth={3} />
                 </button>
               </div>
@@ -92,7 +103,10 @@ export default function HostingTypes() {
             </div>
             
             <div className="relative z-10 w-full md:w-auto">
-              <button className="btn-boutique w-full md:w-auto justify-center !shadow-none hover:!shadow-none bg-primary text-black whitespace-nowrap">
+              <button 
+                onClick={() => scrollToSection('pricing')}
+                className="btn-boutique w-full md:w-auto justify-center !shadow-none hover:!shadow-none bg-primary text-black whitespace-nowrap"
+              >
                 Registrar Ahora
               </button>
             </div>
