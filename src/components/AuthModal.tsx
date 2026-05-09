@@ -64,20 +64,31 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
     setError(null);
     
     try {
-      const { error } = await authClient.emailOtp.sendVerificationOtp({ 
-        email, 
-        type: 'sign-in' 
+      // Intenta registrar al usuario primero para disparar la verificación real de Neon
+      const { data, error: signUpError } = await authClient.signUp.email({
+        email,
+        password: "TempPassword123!", // Contraseña temporal requerida por Better Auth
+        name: email.split('@')[0],
       });
       
-      if (error) {
-        console.error("Neon Auth Error:", error);
-        throw new Error(error.message || "Error del servidor de autenticación.");
+      if (signUpError) {
+        // Si el usuario ya existe, procedemos con el envío de OTP para login
+        if (signUpError.status === 422 || signUpError.message?.includes("already exists")) {
+          const { error: otpError } = await authClient.emailOtp.sendVerificationOtp({ 
+            email, 
+            type: 'sign-in' 
+          });
+          if (otpError) throw new Error(otpError.message);
+        } else {
+          throw new Error(signUpError.message);
+        }
       }
       
       setStep('code');
+      setResendTimer(60);
     } catch (err: any) {
-      console.error("OTP Send Exception:", err);
-      setError(err.message || "No se pudo enviar el código. Intenta de nuevo.");
+      console.error("OTP Flow Exception:", err);
+      setError(err.message || "No se pudo procesar tu solicitud. Intenta de nuevo.");
     } finally {
       setIsLoading(false);
     }
@@ -89,13 +100,19 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
     setError(null);
     
     try {
-      const { data, error } = await authClient.signIn.emailOtp({ 
+      // Verificamos el código usando el plugin de OTP
+      const { data, error } = await authClient.emailOtp.verifyEmail({ 
         email, 
         otp: code 
       });
       
       if (error) {
-        throw new Error(error.message || "Código inválido o expirado.");
+        // Si falla la verificación directa de email, intentamos como sign-in
+        const { error: signInError } = await authClient.signIn.emailOtp({
+          email,
+          otp: code
+        });
+        if (signInError) throw new Error(signInError.message || "Código inválido o expirado.");
       }
       
       setStep('success');
