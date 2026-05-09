@@ -30,7 +30,7 @@ export default function AuthModal({ isOpen, onClose, plan }: AuthModalProps) {
     
     // Redirección inmediata a la pasarela de pagos
     setTimeout(() => {
-      window.location.href = "https://checkout.bold.co/payment/LNK_MQNYJ0DANX";
+      window.location.href = "https://checkout.bold.co/payment/LNK_XI4E6L88IP";
     }, 800);
   };
 
