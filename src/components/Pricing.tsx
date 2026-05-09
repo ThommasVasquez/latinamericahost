@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Check, ArrowRight, PartyPopper, Rocket, ShieldCheck, Github } from "lucide-react";
+import { Check, ArrowRight, PartyPopper, Rocket, ShieldCheck, Server } from "lucide-react";
 import AuthModal from "./AuthModal";
 
 interface Plan {
@@ -82,7 +82,7 @@ export default function Pricing() {
                 <p className="text-sm font-bold">Configurando SSL & WAF</p>
               </div>
               <div className="bg-black/5 p-8 border-l-4 border-black">
-                <Github className="mb-4" />
+                <Server className="mb-4" />
                 <h4 className="font-black uppercase text-sm mb-2">Paso 03</h4>
                 <p className="text-sm font-bold">Enlazando Repositorios</p>
               </div>
