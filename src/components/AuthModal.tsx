@@ -88,6 +88,10 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
       setResendTimer(60);
     } catch (err: any) {
       console.error("OTP Flow Exception:", err);
+      // Extra debug for the user to see in browser console
+      if (err.signUpError) console.error("Sign Up Error Detail:", err.signUpError);
+      if (err.otpError) console.error("OTP Error Detail:", err.otpError);
+      
       setError(err.message || "No se pudo procesar tu solicitud. Intenta de nuevo.");
     } finally {
       setIsLoading(false);
