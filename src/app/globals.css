@@ -273,7 +273,7 @@ a {
 }
 
 .bento-item-large { grid-column: span 2; grid-row: span 2; }
-.bento-item-tall { grid-row: span 2; }
+.bento-item-wide { grid-column: span 2; }
 
 @media (max-width: 1024px) {
   .bento-grid {

@@ -80,26 +80,27 @@ export default function HostingTypes() {
             </div>
           ))}
           
-          <div className="card-brutal bento-item-tall bg-black text-white border-white/10 flex flex-col justify-between overflow-hidden relative">
-            <div className="relative z-10">
-              <div className="w-12 h-12 bg-primary text-black flex items-center justify-center mb-10 rotate-12">
-                <Cpu size={24} />
+          <div className="card-brutal bento-item-wide bg-black text-white border-white/10 flex flex-col md:flex-row justify-between items-center overflow-hidden relative gap-10">
+            <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
+              <div className="w-20 h-20 bg-primary text-black flex items-center justify-center rotate-12 flex-shrink-0">
+                <Cpu size={32} />
               </div>
-              <h3 className="text-4xl font-bold leading-none uppercase mb-6">DOMINIOS <br />PREMIUM</h3>
-              <p className="font-bold text-sm opacity-60">Gestiona tu identidad digital con las herramientas más potentes de la industria.</p>
+              <div className="text-center md:text-left">
+                <h3 className="text-4xl font-bold leading-none uppercase mb-4">DOMINIOS <br className="hidden md:block" />PREMIUM</h3>
+                <p className="font-bold text-sm opacity-60 max-w-xs">Gestiona tu identidad digital con las herramientas más potentes de la industria.</p>
+              </div>
             </div>
             
-            <div className="relative z-10">
-              <button className="btn-boutique w-full justify-center !shadow-none hover:!shadow-none bg-primary text-black">
+            <div className="relative z-10 w-full md:w-auto">
+              <button className="btn-boutique w-full md:w-auto justify-center !shadow-none hover:!shadow-none bg-primary text-black whitespace-nowrap">
                 Registrar Ahora
               </button>
             </div>
 
             {/* Technical background decoration */}
             <div className="absolute inset-0 opacity-10 pointer-events-none" 
-                 style={{ backgroundImage: 'radial-gradient(var(--primary) 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
+                 style={{ backgroundImage: 'radial-gradient(var(--primary) 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
             </div>
-            <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-primary opacity-10 rotate-12 blur-[80px]"></div>
           </div>
         </div>
       </div>
