@@ -1,0 +1,301 @@
+:root {
+  /* Sophisticated Boutique Palette */
+  --background: #0d0d0d;
+  --foreground: #f2f2f2;
+  --primary: #c2fd4d; /* Electric Lime/Lemon */
+  --primary-hover: #b0e63d;
+  --secondary: #1a1a1a;
+  --accent: #ff6b35; /* Burnt Orange */
+  --surface: #141414;
+  --surface-border: rgba(255, 255, 255, 0.08);
+  --muted: #808080;
+  
+  /* Typography */
+  --font-main: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-bricolage), system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-main);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Noise Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  opacity: 0.03;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Base Styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+p {
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Layout Utilities */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 1.5rem; }
+}
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.flex-1 { flex: 1 1 0%; }
+.flex-wrap { flex-wrap: wrap; }
+
+.grid { display: grid; }
+.grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (min-width: 768px) {
+  .md\:flex { display: flex; }
+  .md\:grid { display: grid; }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .md\:text-left { text-align: left; }
+}
+
+.hidden { display: none; }
+.text-center { text-align: center; }
+
+/* Spacing */
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.gap-8 { gap: 2rem; }
+.gap-12 { gap: 3rem; }
+.gap-20 { gap: 5rem; }
+
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+.p-12 { padding: 3rem; }
+.p-20 { padding: 5rem; }
+
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+
+.mb-4 { margin-bottom: 1rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mb-12 { margin-bottom: 3rem; }
+.mb-20 { margin-bottom: 5rem; }
+
+/* Typography */
+.text-xs { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.text-sm { font-size: 0.875rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-5xl { font-size: 3.5rem; }
+.text-7xl { font-size: 6rem; line-height: 0.9; }
+
+@media (max-width: 768px) {
+  .text-5xl { font-size: 2.5rem; }
+  .text-7xl { font-size: 3.5rem; }
+}
+
+.font-bold { font-weight: 700; }
+.text-primary { color: var(--primary); }
+.text-muted { color: var(--muted); }
+
+/* Custom Design Components */
+.btn-boutique {
+  background: var(--primary);
+  color: black;
+  padding: 1.2rem 2.5rem;
+  border-radius: 0;
+  font-weight: 800;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid black;
+  box-shadow: 4px 4px 0px 0px black;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.btn-boutique:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px 0px black;
+}
+
+.btn-boutique:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px black;
+}
+
+.btn-boutique svg {
+  transition: transform 0.3s ease;
+}
+
+.btn-boutique:hover svg {
+  transform: translateX(4px) rotate(-10deg);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: white;
+  padding: 1.2rem 2.5rem;
+  border-radius: 0;
+  font-weight: 800;
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--surface-border);
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: white;
+  color: black;
+  border-color: white;
+}
+
+.card-brutal {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  padding: 2.5rem;
+  border-radius: 0;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.card-brutal:hover {
+  border-color: var(--primary);
+  transform: translateY(-5px);
+}
+
+.card-brutal::after {
+  content: "";
+  position: absolute;
+  bottom: 0; right: 0; width: 40px; height: 40px;
+  background: linear-gradient(135deg, transparent 50%, var(--primary) 50%);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.card-brutal:hover::after {
+  opacity: 1;
+}
+
+.badge {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 0.2rem 0.6rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+/* Bento Grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 300px);
+  gap: 1rem;
+}
+
+.bento-item-large { grid-column: span 2; grid-row: span 2; }
+.bento-item-tall { grid-row: span 2; }
+
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+  }
+  .bento-item-large, .bento-item-tall { grid-column: span 2; grid-row: span 1; }
+}
+
+/* Animations */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-up {
+  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Reset browser defaults for a clean boutique feel */
+.outline-none, 
+input:focus { 
+  outline: none !important; 
+  box-shadow: none !important; 
+}
+
+.search-input-fix {
+  -webkit-appearance: none;
+  border-radius: 0;
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Search Input & Scrollbar Utilities */
+.search-input-fix {
+  box-shadow: none !important;
+  -webkit-appearance: none;
+  background-color: transparent !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
