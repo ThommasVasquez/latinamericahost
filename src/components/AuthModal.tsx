@@ -42,7 +42,7 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
 
     // Flujo normal: Redirección a Bold
     setTimeout(() => {
-      window.location.href = "https://checkout.bold.co/payment/LNK_XI4E6L88IP";
+      window.location.href = "https://checkout.bold.co/payment/LNK_WBWF0ZMH1Y";
     }, 800);
   };
 
@@ -71,30 +71,34 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
                     <p className="text-sm font-medium text-muted">Plan {plan.name} — Configuración de Alto Rendimiento</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-bold">COP ${plan.price}</div>
+                    <div className="text-3xl font-bold">COP $520.000</div>
                     <div className="text-xs font-black opacity-40 uppercase tracking-widest">Pago Anual</div>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 bg-primary text-black text-[10px] font-black px-2 py-1 uppercase">Activo</div>
-                <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-4 opacity-40 text-white">Dominios Registrados</h4>
+                <div className="absolute top-0 right-0 bg-primary text-black text-[10px] font-black px-2 py-1 uppercase">Registro</div>
+                <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-4 opacity-40 text-white">Dominios Seleccionados</h4>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center bg-black/20 p-3 border-l-2 border-primary">
                     <span className="font-bold text-sm tracking-tight text-white/90">ingenova.com.co</span>
-                    <span className="text-[10px] font-black text-primary uppercase">Incluido</span>
+                    <span className="text-xs font-black text-primary uppercase">COP $70.000</span>
                   </div>
                   <div className="flex justify-between items-center bg-black/20 p-3 border-l-2 border-primary">
                     <span className="font-bold text-sm tracking-tight text-white/90">solucionesintegralesas.com</span>
-                    <span className="text-[10px] font-black text-primary uppercase">Incluido</span>
+                    <span className="text-xs font-black text-primary uppercase">COP $70.000</span>
+                  </div>
+                  <div className="flex justify-between items-center bg-black/10 p-3 border-l-2 border-white/20">
+                    <span className="font-bold text-sm tracking-tight text-white/40 italic">Tasa de Configuración Inicial</span>
+                    <span className="text-xs font-black text-white/40 uppercase">COP $10.000</span>
                   </div>
                 </div>
               </div>
 
-              <div className="flex justify-between items-center p-6 border-2 border-primary/20 bg-primary/5">
+              <div className="flex justify-between items-center p-6 border-2 border-primary bg-primary/10">
                 <span className="text-sm font-black uppercase tracking-widest">Total a Pagar</span>
-                <span className="text-4xl font-black text-primary">COP ${plan.price}</span>
+                <span className="text-4xl font-black text-primary">COP $670.000</span>
               </div>
             </div>
 
