@@ -63,25 +63,39 @@ export default function AuthModal({ isOpen, onClose, plan, onSuccess }: AuthModa
             <div className="badge mb-6 text-black">Resumen de Orden</div>
             <h2 className="text-4xl font-bold uppercase tracking-tighter mb-8">Confirmar <span className="text-primary">Configuración</span></h2>
             
-            <div className="bg-white/5 border border-white/10 p-6 mb-10">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-2xl font-bold text-primary">{plan.name}</h3>
-                  <p className="text-sm font-medium text-muted">{plan.desc}</p>
-                </div>
-                <div className="text-right">
-                  <div className="text-3xl font-bold">COP ${plan.price}</div>
-                  <div className="text-xs font-black opacity-40 uppercase tracking-widest">Pago Anual</div>
+            <div className="space-y-4 mb-10">
+              <div className="bg-white/5 border border-white/10 p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-primary uppercase">Hosting VPS Dinámico</h3>
+                    <p className="text-sm font-medium text-muted">Plan {plan.name} — Configuración de Alto Rendimiento</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-3xl font-bold">COP ${plan.price}</div>
+                    <div className="text-xs font-black opacity-40 uppercase tracking-widest">Pago Anual</div>
+                  </div>
                 </div>
               </div>
-              <ul className="grid grid-cols-2 gap-2 mt-6 pt-6 border-t border-white/5">
-                {plan.features.slice(0, 4).map((f, i) => (
-                  <li key={i} className="text-[10px] font-black uppercase tracking-widest opacity-60 flex items-center gap-2">
-                    <div className="w-1 h-1 bg-primary"></div>
-                    {f}
-                  </li>
-                ))}
-              </ul>
+
+              <div className="bg-white/5 border border-white/10 p-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 bg-primary text-black text-[10px] font-black px-2 py-1 uppercase">Activo</div>
+                <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-4 opacity-40 text-white">Dominios Registrados</h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center bg-black/20 p-3 border-l-2 border-primary">
+                    <span className="font-bold text-sm tracking-tight text-white/90">ingenova.com.co</span>
+                    <span className="text-[10px] font-black text-primary uppercase">Incluido</span>
+                  </div>
+                  <div className="flex justify-between items-center bg-black/20 p-3 border-l-2 border-primary">
+                    <span className="font-bold text-sm tracking-tight text-white/90">solucionesintegralesas.com</span>
+                    <span className="text-[10px] font-black text-primary uppercase">Incluido</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center p-6 border-2 border-primary/20 bg-primary/5">
+                <span className="text-sm font-black uppercase tracking-widest">Total a Pagar</span>
+                <span className="text-4xl font-black text-primary">COP ${plan.price}</span>
+              </div>
             </div>
 
             <button 
